@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #eef1f6;
+  --surface: #ffffff;
+  --surface-2: #e7ebf3;
+  --surface-3: #d8deea;
+  --ink: #1a2030;
+  --ink-soft: #525a6e;
+  --ink-faint: #868ea3;
+  --line: #d8dee9;
+  --line-soft: #e6eaf2;
+  --brand: #d98a2b;
+  --brand-ink: #fff6ea;
+  --focus: #3d63d8;
+  --ac-h: #1795ae;
+  --ac-e: #4a93d4;
+  --ac-x: #c74d92;
+  --ac-a: #33a473;
+  --ac-c: #dd6234;
+  --ac-o: #dfad2c;
+  --good: #2f9e6b;
+  --bad: #d05a44;
+  --shadow-sm: 0 1px 2px rgba(20, 26, 44, 0.05), 0 3px 8px rgba(20, 26, 44, 0.05);
+  --shadow-lg: 0 2px 6px rgba(20, 26, 44, 0.06), 0 20px 50px rgba(20, 26, 44, 0.1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1218;
+    --surface: #171b24;
+    --surface-2: #1f2430;
+    --surface-3: #2b3140;
+    --ink: #eef1f8;
+    --ink-soft: #aab2c4;
+    --ink-faint: #7a8296;
+    --line: #2c333f;
+    --line-soft: #232936;
+    --brand: #e5a049;
+    --brand-ink: #191309;
+    --focus: #7d9bff;
+    --ac-h: #3bbcd4;
+    --ac-e: #6fb0e6;
+    --ac-x: #e26cad;
+    --ac-a: #48c48c;
+    --ac-c: #f0824f;
+    --ac-o: #f0c246;
+    --good: #54c48c;
+    --bad: #e8735c;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 24px 60px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1218;
+  --surface: #171b24;
+  --surface-2: #1f2430;
+  --surface-3: #2b3140;
+  --ink: #eef1f8;
+  --ink-soft: #aab2c4;
+  --ink-faint: #7a8296;
+  --line: #2c333f;
+  --line-soft: #232936;
+  --brand: #e5a049;
+  --brand-ink: #191309;
+  --focus: #7d9bff;
+  --ac-h: #3bbcd4;
+  --ac-e: #6fb0e6;
+  --ac-x: #e26cad;
+  --ac-a: #48c48c;
+  --ac-c: #f0824f;
+  --ac-o: #f0c246;
+  --good: #54c48c;
+  --bad: #e8735c;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 24px 60px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 {
+  font-family: "Bricolage Grotesque", "IBM Plex Sans", sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 0;
+}
+a {
+  color: var(--focus);
+}
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+input,
+button,
+select,
+textarea {
+  font: inherit;
+}
+::placeholder {
+  color: var(--ink-faint);
+}
+
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--brand);
+    color: var(--brand-ink);
+    border: none;
+    border-radius: 9px;
+    padding: 0.8rem 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  .btn:hover {
+    filter: brightness(1.05);
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: none;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+  .btn-sm {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 0.6rem 0.8rem;
+    color: var(--ink);
+    width: 100%;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+  }
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ---- appliance icon ---- */
+.appl-ic {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- print (PDF do resultado) ---- */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  .no-print {
+    display: none !important;
+  }
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --surface-3: #e3e3e3;
+    --ink: #000;
+    --ink-soft: #1e1e1e;
+    --ink-faint: #555;
+    --line: #bbb;
+    --line-soft: #ddd;
+  }
+  body {
+    background: #fff;
+  }
+  .print-block {
+    break-inside: avoid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
