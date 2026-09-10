@@ -1,5 +1,7 @@
 # Hexacon
 
+**No ar:** https://hexacon-app.netlify.app
+
 Sistema da palestra **Hexacon** — a metodologia HEXACO aplicada a comunicação e
 relações, na forma de "seis controles num celular".
 
