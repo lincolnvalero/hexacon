@@ -1,24 +1,33 @@
 # HANDOFF — Hexacon
 
-## Estado (2026-09-08)
-App **completo e testado localmente**. Falta só o deploy (feito pelo Lincoln na Vercel).
+## Estado (2026-09-10)
+App **completo e testado localmente**. Falta só o deploy.
 
-- Repo: `hexacon/` (git iniciado, 1 commit). `npm run build` passa.
-- Supabase: projeto **hexacon** `putnnvvsxrulzipebacf` (sa-east-1). Migrações 0001 e 0002 aplicadas.
-- RLS validada por REST com a anon key (evento aberto/fechado, insert de resposta, leitura restrita).
-- Fluxo do participante testado no navegador de ponta a ponta (intro → 60 perguntas → resultado → insert no banco OK).
+- Repo: `hexacon/` (git, 3 commits). `npm run build` passa.
+- Supabase: projeto **hexacon** `putnnvvsxrulzipebacf` (org `hugiaemznmubwxrtpjsq`, sa-east-1).
+  Migrações 0001 e 0002 aplicadas. RLS validada por REST.
+- Fluxo do participante testado no navegador ponta a ponta (intro → 60 perguntas → resultado → insert OK).
+- **Deploy é NETLIFY** (não Vercel). `netlify.toml` + `public/_redirects` já configurados.
+- **Não usar o conector MCP do Supabase** — o Lincoln pediu para operar direto no painel dele
+  (org `hugiaemznmubwxrtpjsq`, aberto no Chrome). A parte de banco já está pronta, então não
+  há mais nada a fazer no Supabase via ferramenta — só a config de Auth (abaixo), que é no painel.
 
-## Falta fazer
-1. **Deploy Vercel** (Lincoln): `vercel link` (time lincoln-s-acme) → `vercel --prod`.
-   Env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (valores no `.env.example` / README).
-2. **Supabase Auth** (Lincoln, painel): Authentication → URL Configuration → Site URL = URL da Vercel;
-   Redirect URLs += `<url>/painel` e `http://localhost:5173/painel`.
-3. Primeiro login (magic link em lincolnvalero@hotmail.com) → criar um evento → testar QR na turma.
+## Falta fazer (Lincoln)
+1. **Deploy Netlify** — CLI (`netlify login` → `netlify init` → `netlify env:set ...` → `netlify deploy --build --prod`)
+   ou conectar o repo no painel (build `npm run build`, publish `dist`).
+   Env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (valores no README / `.env.example`).
+2. **Supabase Auth** (painel, org `hugiaemznmubwxrtpjsq` → projeto hexacon → Authentication → URL Configuration):
+   Site URL = URL da Netlify; Redirect URLs += `<url>/painel` e `http://localhost:5173/painel`.
+3. Primeiro login (magic link em lincolnvalero@hotmail.com) → criar evento → testar QR na turma.
+
+## NotebookLM MCP
+Conectado nesta máquina, mas `get_health` → `authenticated: false` (login Google nunca completou).
+Pendente e independente do Hexacon. Rodar `setup_auth` de novo quando for mexer nas melhorias.
 
 ## Possíveis próximos passos
-- Trocar itens por IPIP-HEXACO (domínio público) — estrutura de dados já comporta (`src/lib/hexaco.ts`).
-- Code-splitting do bundle (490 kB; Supabase+qrcode pesam).
-- Slides: variar mais os layouts; opção de exportar o deck em PDF.
+- Trocar itens por IPIP-HEXACO (domínio público) — estrutura já comporta (`src/lib/hexaco.ts`).
+- Code-splitting do bundle (490 kB).
+- Slides: variar layouts; exportar deck em PDF.
 - Dashboard: linha do tempo de respostas, comparar turmas.
 
 ## Arquivos-chave
@@ -27,3 +36,4 @@ App **completo e testado localmente**. Falta só o deploy (feito pelo Lincoln na
 - `src/views/Responder.tsx` + `src/components/ResultView.tsx` — participante.
 - `src/views/{Dashboard,Turma,ResponderPicker,Slides}.tsx` — área do palestrante.
 - `supabase/migrations/` — schema + RLS.
+- `netlify.toml`, `public/_redirects` — deploy.

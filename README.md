@@ -20,7 +20,7 @@ e baixa o PDF (botão → diálogo de impressão do navegador → "Salvar como P
 - **Front:** Vite + React + TypeScript + Tailwind. SPA estática.
 - **Back:** Supabase (Postgres + PostgREST + RLS). O navegador fala direto com o
   Supabase pela *anon key* — o acesso é todo controlado por RLS.
-- **Deploy:** Vercel (estático). `vercel.json` já tem o rewrite de SPA.
+- **Deploy:** Netlify (estático). `netlify.toml` + `public/_redirects` fazem o rewrite de SPA.
 - Sem servidor próprio. Free tier em tudo.
 
 ## Rodar local
@@ -56,26 +56,37 @@ respostas pelo anon retorna vazio ✓.
 O login do palestrante é **magic link**. No painel do projeto → **Authentication →
 URL Configuration**:
 
-1. **Site URL:** a URL de produção da Vercel (ex.: `https://hexacon.vercel.app`).
+1. **Site URL:** a URL de produção da Netlify (ex.: `https://hexacon.netlify.app`).
 2. **Redirect URLs:** adicione `https://SEU-DOMINIO/painel` e `http://localhost:5173/painel`.
 
 (Email padrão do Supabase serve para começar; para volume, plugar um SMTP.)
 
-## Deploy na Vercel
+## Deploy na Netlify
+
+`netlify.toml` já traz o build (`npm run build` → `dist`) e o rewrite de SPA
+(`public/_redirects` também, como reforço).
+
+**Opção A — CLI:**
 
 ```bash
-vercel link          # time lincoln-s-acme
-vercel --prod
+npm i -g netlify-cli      # se ainda não tiver
+netlify login
+netlify init              # cria/liga o site (ou: netlify link)
+netlify env:set VITE_SUPABASE_URL https://putnnvvsxrulzipebacf.supabase.co
+netlify env:set VITE_SUPABASE_ANON_KEY sb_publishable_0KfQfI9EYGtKbaxS2YswJw_fBbBNTKa
+netlify deploy --build --prod
 ```
 
-No painel da Vercel → **Settings → Environment Variables**, adicione:
+**Opção B — Git:** conecte o repositório no painel da Netlify. Build command
+`npm run build`, publish directory `dist`. Adicione as duas variáveis em
+**Site settings → Environment variables**:
 
 | Nome | Valor |
 |---|---|
 | `VITE_SUPABASE_URL` | `https://putnnvvsxrulzipebacf.supabase.co` |
 | `VITE_SUPABASE_ANON_KEY` | `sb_publishable_0KfQfI9EYGtKbaxS2YswJw_fBbBNTKa` |
 
-Depois do primeiro deploy, volte ao Supabase e ponha a URL da Vercel em Site URL /
+Depois do primeiro deploy, volte ao Supabase e ponha a URL da Netlify em Site URL /
 Redirect URLs (passo acima).
 
 ## Sobre os itens do teste
