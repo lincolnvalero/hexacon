@@ -10,7 +10,7 @@ import {
   type Resultado,
 } from "../lib/hexaco";
 import { Phone } from "../components/Phone";
-import { DemoPanel } from "../components/Faders";
+import { MethodItems } from "../components/Faders";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { ResultView } from "../components/ResultView";
 import { Scale } from "../components/Scale";
@@ -141,10 +141,10 @@ function Flow({ ev }: { ev: EventRow }) {
 function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) {
   return (
     <>
-      <div className="grid items-start gap-8 md:grid-cols-[320px_1fr]">
+      <div className="grid items-start gap-8 md:grid-cols-[220px_1fr]">
         <div className="mx-auto md:mx-0">
-          <Phone title="Meu painel" sub="arraste">
-            <DemoPanel />
+          <Phone title="Os 6 controles" maxWidth={220}>
+            <MethodItems />
           </Phone>
         </div>
         <div>
@@ -153,18 +153,10 @@ function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) 
           </div>
           <h1 className="text-3xl font-extrabold sm:text-4xl">Seis controles, na palma da mão</h1>
           <p className="mt-4 max-w-[52ch]" style={{ color: "var(--ink-soft)" }}>
-            A metodologia <b style={{ color: "var(--ink)" }}>HEXACO</b> descreve a personalidade em seis
-            fatores; aqui ela serve a um objetivo prático — <b style={{ color: "var(--ink)" }}>melhorar
-            o relacionamento e a comunicação</b> no time. Você responde de 1 (discordo) a 5 (concordo) e
-            recebe seus seis controles calibrados, com a luz e a sombra de cada ponta. São três versões:
-            a de <b style={{ color: "var(--ink)" }}>~10 minutos já é suficiente</b> para um retrato
-            confiável; a de ~20 minutos aprofunda; a de{" "}
-            <b style={{ color: "var(--ink)" }}>~30 minutos entrega um resultado excelente</b>. Tudo roda
+            Responda e receba, na hora, os seus seis controles calibrados — a força e a sombra de
+            cada ponta. Da rápida (<b style={{ color: "var(--ink)" }}>10 min</b>) à completa (
+            <b style={{ color: "var(--ink)" }}>30 min</b>), você escolhe a profundidade. Tudo roda
             no seu aparelho.
-          </p>
-          <p className="mt-4 border-l-[3px] pl-3 text-sm" style={{ borderColor: "var(--line)", color: "var(--ink-faint)" }}>
-            Comece pela imagem: uma casa inteligente tem seis controles deslizantes, nenhum de
-            liga-desliga. O segredo nunca é deixar tudo no máximo — é achar o ponto de cada um.
           </p>
         </div>
       </div>
@@ -202,10 +194,11 @@ function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) 
       </div>
 
       <p className="mt-8 border-t pt-4 text-xs" style={{ borderColor: "var(--line-soft)", color: "var(--ink-faint)" }}>
-        Itens de redação própria, montados sobre a estrutura oficial do HEXACO (6 fatores × 4 facetas +
-        Altruísmo) — não são o inventário HEXACO-PI-R. As faixas usam médias normativas aproximadas.
         Seus seis resultados {`(e, se preenchido, seu nome e ministério)`} ficam visíveis para o
-        palestrante no painel da turma. Responda pensando em como você é num dia comum.
+        palestrante no painel da turma. Responda pensando em como você é num dia comum. Itens de
+        redação própria, montados sobre a estrutura da metodologia HEXACO® (6 fatores × 4 facetas
+        + Altruísmo) — não são o inventário HEXACO-PI-R; as faixas usam médias normativas
+        aproximadas.
       </p>
     </>
   );

@@ -1,10 +1,20 @@
 import type { ReactNode } from "react";
 
-export function Phone({ title, sub, children }: { title: string; sub?: string; children: ReactNode }) {
+export function Phone({
+  title,
+  sub,
+  children,
+  maxWidth = 320,
+}: {
+  title: string;
+  sub?: string;
+  children: ReactNode;
+  maxWidth?: number;
+}) {
   return (
     <div
-      className="relative w-full max-w-[320px] flex-none rounded-[34px] border p-3"
-      style={{ background: "var(--surface-2)", borderColor: "var(--line)", boxShadow: "var(--shadow-lg)" }}
+      className="relative w-full flex-none rounded-[34px] border p-3"
+      style={{ background: "var(--surface-2)", borderColor: "var(--line)", boxShadow: "var(--shadow-lg)", maxWidth }}
     >
       <span
         className="absolute left-1/2 top-[9px] h-[5px] w-[34%] -translate-x-1/2 rounded"

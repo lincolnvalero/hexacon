@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { supabase, type EventRow } from "../lib/supabase";
 import { FACTORS } from "../lib/hexaco";
 import { ApplianceIcon } from "../components/Icon";
@@ -51,59 +51,80 @@ export function Slides() {
   const s = slides[i];
 
   return (
-    <div ref={wrapRef} className="flex min-h-screen flex-col" style={{ background: "var(--bg)" }}>
-      <div className="flex flex-1 items-center justify-center p-4 sm:p-10">
-        <div
-          className="card flex w-full max-w-[900px] flex-col justify-center p-8 sm:p-14"
-          style={{ minHeight: "min(64vh, 520px)", boxShadow: "var(--shadow-lg)", ["--cc" as string]: s.cc ? `var(${s.cc})` : "var(--brand)" }}
-        >
-          {i === 0 && ev && (
-            <a
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-ghost btn-sm absolute right-6 top-6 no-print"
-              style={{ position: "absolute" }}
-            >
-              Página de respostas ↗
-            </a>
-          )}
-          <div className="mono mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
-            {s.kind}
+    <div ref={wrapRef} className="flex min-h-screen flex-col print:block" style={{ background: "var(--bg)" }}>
+      <div className="flex flex-1 flex-col print:hidden">
+        <div className="flex flex-1 items-center justify-center p-4 sm:p-10">
+          <div
+            className="card relative flex w-full max-w-[900px] flex-col justify-center p-8 sm:p-14"
+            style={{ minHeight: "min(64vh, 520px)", boxShadow: "var(--shadow-lg)", ["--cc" as string]: s.cc ? `var(${s.cc})` : "var(--brand)" }}
+          >
+            {i === 0 && ev && (
+              <a
+                href={link}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-ghost btn-sm absolute right-6 top-6"
+                style={{ position: "absolute" }}
+              >
+                Página de respostas ↗
+              </a>
+            )}
+            <div className="mono mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
+              {s.kind}
+            </div>
+            {s.render()}
           </div>
-          {s.render()}
+        </div>
+
+        <div
+          className="sticky bottom-0 border-t px-4 py-2.5 sm:px-6"
+          style={{ background: "color-mix(in srgb, var(--bg) 92%, transparent)", backdropFilter: "blur(10px)", borderColor: "var(--line-soft)" }}
+        >
+          <div className="mx-auto flex max-w-[900px] items-center gap-3">
+            <Link to="/painel" className="btn btn-ghost btn-sm" title="Voltar ao menu">
+              ☰ menu
+            </Link>
+            <button className="btn btn-ghost btn-sm" onClick={() => go(-1)} disabled={i === 0}>
+              ‹
+            </button>
+            <div className="flex flex-1 flex-wrap gap-1.5">
+              {slides.map((_, k) => (
+                <button
+                  key={k}
+                  aria-label={`Slide ${k + 1}`}
+                  onClick={() => setI(k)}
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: k === i ? "var(--brand)" : "var(--surface-3)", transform: k === i ? "scale(1.3)" : undefined }}
+                />
+              ))}
+            </div>
+            <span className="mono text-xs" style={{ color: "var(--ink-faint)" }}>
+              {i + 1} / {n}
+            </span>
+            <button className="btn btn-ghost btn-sm" onClick={fullscreen} title="Tela cheia">
+              ⛶
+            </button>
+            <button className="btn btn-ghost btn-sm" onClick={() => go(1)} disabled={i === n - 1}>
+              ›
+            </button>
+          </div>
         </div>
       </div>
 
-      <div
-        className="sticky bottom-0 border-t px-4 py-2.5 no-print sm:px-6"
-        style={{ background: "color-mix(in srgb, var(--bg) 92%, transparent)", backdropFilter: "blur(10px)", borderColor: "var(--line-soft)" }}
-      >
-        <div className="mx-auto flex max-w-[900px] items-center gap-3">
-          <button className="btn btn-ghost btn-sm" onClick={() => go(-1)} disabled={i === 0}>
-            ‹
-          </button>
-          <div className="flex flex-1 flex-wrap gap-1.5">
-            {slides.map((_, k) => (
-              <button
-                key={k}
-                aria-label={`Slide ${k + 1}`}
-                onClick={() => setI(k)}
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ background: k === i ? "var(--brand)" : "var(--surface-3)", transform: k === i ? "scale(1.3)" : undefined }}
-              />
-            ))}
+      {/* impressão: todos os slides, um por página (usado para exportar o deck em PDF) */}
+      <div className="hidden print:block">
+        {slides.map((sl, k) => (
+          <div
+            key={k}
+            className="print-slide flex flex-col justify-center p-10"
+            style={{ ["--cc" as string]: sl.cc ? `var(${sl.cc})` : "var(--brand)" }}
+          >
+            <div className="mono mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
+              {sl.kind}
+            </div>
+            {sl.render()}
           </div>
-          <span className="mono text-xs" style={{ color: "var(--ink-faint)" }}>
-            {i + 1} / {n}
-          </span>
-          <button className="btn btn-ghost btn-sm" onClick={fullscreen} title="Tela cheia">
-            ⛶
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={() => go(1)} disabled={i === n - 1}>
-            ›
-          </button>
-        </div>
+        ))}
       </div>
     </div>
   );

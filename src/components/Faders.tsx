@@ -2,6 +2,32 @@ import { useState } from "react";
 import { FACTORS, posPct, faixaLabel, type FactorScore } from "../lib/hexaco";
 import { ApplianceIcon } from "./Icon";
 
+/* ---------- 6 itens, compacto (legenda da metáfora) ---------- */
+export function MethodItems() {
+  return (
+    <div className="grid grid-cols-2 gap-1.5">
+      {FACTORS.map((f) => (
+        <div
+          key={f.k}
+          className="flex items-center gap-1.5 rounded-lg px-2 py-1.5"
+          style={{ background: "var(--surface-2)", ["--cc" as string]: `var(${f.cssVar})` }}
+        >
+          <span
+            className="grid h-6 w-6 flex-none place-items-center rounded-full"
+            style={{ background: "color-mix(in srgb, var(--cc) 20%, transparent)" }}
+          >
+            <ApplianceIcon ic={f.ic} className="!h-3.5 !w-3.5" style={{ color: "var(--cc)" }} />
+          </span>
+          <span className="min-w-0 truncate text-[0.7rem] font-semibold">{f.appliance}</span>
+          <span className="mono ml-auto text-[0.56rem]" style={{ color: "var(--ink-faint)" }}>
+            {f.k}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- painel interativo (demonstração da metáfora) ---------- */
 export function DemoPanel() {
   const start = [60, 45, 55, 68, 40, 50];

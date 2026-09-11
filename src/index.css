@@ -219,6 +219,15 @@ textarea {
   .print-block {
     break-inside: avoid;
   }
+  .print-slide {
+    break-after: page;
+    page-break-after: always;
+    min-height: 92vh;
+  }
+  .print-slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
