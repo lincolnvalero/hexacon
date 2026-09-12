@@ -12,9 +12,12 @@ try {
   /* ignore */
 }
 
+// BASE_URL vem do "base" configurado no Vite (raiz normalmente; "/hexacon/" no build do GitHub Pages)
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,

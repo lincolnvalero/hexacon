@@ -3,8 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { supabase, type EventRow } from "../lib/supabase";
 import { QR } from "../components/QR";
 
-const DECK_IMAGE_COUNT = 15;
-const DECK_IMAGES = Array.from({ length: DECK_IMAGE_COUNT }, (_, i) => `/deck/slide-${String(i + 1).padStart(2, "0")}.jpg`);
+const DECK_IMAGE_COUNT = 14;
+// prefixado com BASE_URL: raiz em produção normal, "/hexacon/" no build do GitHub Pages
+const DECK_IMAGES = Array.from(
+  { length: DECK_IMAGE_COUNT },
+  (_, i) => `${import.meta.env.BASE_URL}deck/slide-${String(i + 1).padStart(2, "0")}.jpg`,
+);
 
 export function Slides() {
   const { id } = useParams();
@@ -71,7 +75,7 @@ export function Slides() {
                 src={DECK_IMAGES[i]}
                 alt={`Slide ${i + 1} de ${DECK_IMAGE_COUNT}`}
                 className="block w-full"
-                style={{ aspectRatio: "1583 / 884" }}
+                style={{ aspectRatio: "1376 / 768" }}
               />
             ) : (
               <CTASlide link={link} />
