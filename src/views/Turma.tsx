@@ -96,6 +96,16 @@ export function Turma() {
     load();
   }
 
+  async function limparRespostas() {
+    if (!ev || !rows.length) return;
+    const ok = window.confirm(
+      `Apagar as ${rows.length} respostas desta turma? Não dá para desfazer — os dados somem de vez.`,
+    );
+    if (!ok) return;
+    await supabase.from("responses").delete().eq("event_id", ev.id);
+    load();
+  }
+
   function exportCSV() {
     const head = "criado_em,nome,ministerio,versao,h,e,x,a,c,o,altruismo";
     const lines = rows.map((r) =>
@@ -160,6 +170,14 @@ export function Turma() {
         </Link>
         <button className="btn btn-ghost btn-sm" onClick={exportCSV} disabled={!rows.length}>
           Exportar CSV
+        </button>
+        <button
+          className="btn btn-ghost btn-sm"
+          onClick={limparRespostas}
+          disabled={!rows.length}
+          style={{ color: "var(--bad)", borderColor: "var(--bad)" }}
+        >
+          Limpar respostas
         </button>
         <button className="btn btn-ghost btn-sm" onClick={load}>
           Atualizar
