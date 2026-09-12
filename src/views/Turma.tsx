@@ -30,6 +30,8 @@ export function Turma() {
   const [rows, setRows] = useState<ResponseRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [minFilter, setMinFilter] = useState<string>("");
+  const [editingTitulo, setEditingTitulo] = useState(false);
+  const [tituloDraft, setTituloDraft] = useState("");
 
   async function load() {
     setLoading(true);
@@ -90,6 +92,14 @@ export function Turma() {
   const atrito = [...pairs].filter((p) => p.v < 0).sort((a, b) => a.v - b.v).slice(0, 2);
   const suporte = [...pairs].filter((p) => p.v > 0).sort((a, b) => b.v - a.v).slice(0, 2);
 
+  async function salvarTitulo() {
+    const novo = tituloDraft.trim();
+    setEditingTitulo(false);
+    if (!ev || !novo || novo === ev.titulo) return;
+    await supabase.from("events").update({ titulo: novo }).eq("id", ev.id);
+    load();
+  }
+
   async function toggleAberto() {
     if (!ev) return;
     await supabase.from("events").update({ aberto: !ev.aberto }).eq("id", ev.id);
@@ -145,7 +155,31 @@ export function Turma() {
 
       <div className="mt-2 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl">{ev.titulo}</h1>
+          {editingTitulo ? (
+            <input
+              autoFocus
+              className="field text-2xl font-bold"
+              style={{ padding: "0.2rem 0.5rem" }}
+              value={tituloDraft}
+              onChange={(e) => setTituloDraft(e.target.value)}
+              onBlur={salvarTitulo}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+                if (e.key === "Escape") setEditingTitulo(false);
+              }}
+            />
+          ) : (
+            <h1
+              className="cursor-pointer rounded text-2xl transition-colors hover:bg-[var(--surface-2)]"
+              title="Clique para renomear a turma"
+              onClick={() => {
+                setTituloDraft(ev.titulo);
+                setEditingTitulo(true);
+              }}
+            >
+              {ev.titulo} <span className="text-sm" style={{ color: "var(--ink-faint)" }}>✎</span>
+            </h1>
+          )}
           <div className="mt-1 text-sm" style={{ color: "var(--ink-soft)" }}>
             {[ev.igreja, ev.cidade, ev.data_evento].filter(Boolean).join(" · ") || "—"}
           </div>
