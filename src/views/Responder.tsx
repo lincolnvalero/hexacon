@@ -143,12 +143,12 @@ function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) 
         <div className="mono mb-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
           Comunicação &amp; relações
         </div>
-        <h1 className="text-3xl font-extrabold sm:text-4xl">Seis controles, na palma da mão</h1>
+        <h1 className="text-3xl font-extrabold sm:text-4xl">Seus seis fatores HEXACO</h1>
         <p className="mt-4 max-w-[52ch]" style={{ color: "var(--ink-soft)" }}>
-          Responda e receba, na hora, os seus seis controles calibrados — a força e a sombra de
+          Responda e receba, na hora, os seus seis fatores calibrados — a força e a sombra de
           cada ponta. Da rápida (<b style={{ color: "var(--ink)" }}>10 min</b>) à completa (
           <b style={{ color: "var(--ink)" }}>30 min</b>), você escolhe a profundidade. Tudo roda
-          no seu aparelho.
+          no seu navegador.
         </p>
       </div>
 

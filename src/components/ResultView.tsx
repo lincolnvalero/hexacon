@@ -76,9 +76,6 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
                   {s.f.k}
                 </span>
                 <span className="font-display text-[1.05rem] font-bold">{s.f.name}</span>
-                <span className="text-[0.76rem]" style={{ color: "var(--ink-faint)" }}>
-                  ({s.f.appliance})
-                </span>
                 <span
                   className="mono ml-auto text-[0.68rem] font-semibold uppercase tracking-wide"
                   style={{ color: "var(--cc)" }}
@@ -153,7 +150,7 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
           {FACTORS.map((f) => (
             <div key={f.k} className="border-t py-3" style={{ borderColor: "var(--line-soft)", ["--cc" as string]: `var(${f.cssVar})` }}>
               <h4 className="mb-1 text-[0.78rem] font-semibold uppercase tracking-wide" style={{ color: "var(--cc)" }}>
-                {f.k} — {f.name} <span style={{ color: "var(--ink-faint)", textTransform: "none" }}>({f.appliance})</span>
+                {f.k} — {f.name}
               </h4>
               <p className="my-1">
                 <b>Com quem está no talo:</b> {f.comAlto}
@@ -170,8 +167,8 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
         className="mt-6 rounded-xl border-l-4 p-5 font-display text-lg font-semibold leading-snug"
         style={{ background: "var(--surface-2)", borderColor: "var(--brand)" }}
       >
-        O quanto eu estou disposto a mexer no <em>meu</em> controle — e não no do outro — para a casa
-        toda continuar funcionando?
+        O quanto eu estou disposto a ajustar o <em>meu</em> traço — e não o do outro — pelo bem do
+        grupo?
       </blockquote>
     </div>
   );

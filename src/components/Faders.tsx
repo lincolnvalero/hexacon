@@ -1,80 +1,13 @@
-import { useState } from "react";
-import { FACTORS, posPct, faixaLabel, type FactorScore } from "../lib/hexaco";
-import { ApplianceIcon } from "./Icon";
+import { posPct, faixaLabel, type FactorScore } from "../lib/hexaco";
 
-/* ---------- 6 itens, compacto (legenda da metáfora) ---------- */
-export function MethodItems() {
+function LetterBadge({ k, size = 20 }: { k: string; size?: number }) {
   return (
-    <div className="grid grid-cols-2 gap-1.5">
-      {FACTORS.map((f) => (
-        <div
-          key={f.k}
-          className="flex items-center gap-1.5 rounded-lg px-2 py-1.5"
-          style={{ background: "var(--surface-2)", ["--cc" as string]: `var(${f.cssVar})` }}
-        >
-          <span
-            className="grid h-6 w-6 flex-none place-items-center rounded-full"
-            style={{ background: "color-mix(in srgb, var(--cc) 20%, transparent)" }}
-          >
-            <ApplianceIcon ic={f.ic} className="!h-3.5 !w-3.5" style={{ color: "var(--cc)" }} />
-          </span>
-          <span className="min-w-0 truncate text-[0.7rem] font-semibold">{f.appliance}</span>
-          <span className="mono ml-auto text-[0.56rem]" style={{ color: "var(--ink-faint)" }}>
-            {f.k}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ---------- painel interativo (demonstração da metáfora) ---------- */
-export function DemoPanel() {
-  const start = [60, 45, 55, 68, 40, 50];
-  return (
-    <div className="grid gap-1">
-      {FACTORS.map((f, i) => (
-        <DemoFader key={f.k} f={f} start={start[i]} />
-      ))}
-    </div>
-  );
-}
-
-function DemoFader({ f, start }: { f: (typeof FACTORS)[number]; start: number }) {
-  const [v, setV] = useState(start);
-  const hint =
-    v >= 68 ? { c: "var(--bad)", t: `⚠ ${f.short.hi}` } : v <= 32 ? { c: "var(--ink-soft)", t: f.short.lo } : { c: "var(--good)", t: `✓ ${f.short.p}` };
-  return (
-    <div className="border-t py-2 first:border-t-0" style={{ borderColor: "var(--line-soft)", ["--cc" as string]: `var(${f.cssVar})` }}>
-      <div className="mb-1 flex items-center gap-2">
-        <ApplianceIcon ic={f.ic} className="!w-4 !h-4" style={{ color: "var(--cc)" }} />
-        <span className="text-[0.78rem] font-semibold">{f.appliance}</span>
-        <span className="mono ml-auto text-[0.6rem]" style={{ color: "var(--ink-faint)" }}>
-          {f.k}
-        </span>
-      </div>
-      <input
-        type="range"
-        min={0}
-        max={100}
-        value={v}
-        onChange={(e) => setV(+e.target.value)}
-        aria-label={f.appliance}
-        className="h-5 w-full appearance-none bg-transparent"
-        style={{
-          background: `linear-gradient(90deg, var(--cc) ${v}%, var(--surface-3) ${v}%)`,
-          borderRadius: 3,
-          height: 6,
-        }}
-      />
-      <div className="mt-1 flex justify-between text-[0.58rem]" style={{ color: "var(--ink-faint)" }}>
-        <span>{f.lo}</span>
-        <span>{f.hi}</span>
-      </div>
-      <div className="mt-1 min-h-[1.4em] text-[0.66rem]" style={{ color: hint.c }}>
-        {hint.t}
-      </div>
-    </div>
+    <span
+      className="grid flex-none place-items-center rounded-full font-display font-bold"
+      style={{ width: size, height: size, fontSize: size * 0.46, background: "var(--cc)", color: "var(--bg)" }}
+    >
+      {k}
+    </span>
   );
 }
 
@@ -89,12 +22,7 @@ export function ResultFader({ s, onClick }: { s: FactorScore; onClick?: () => vo
       onClick={onClick}
     >
       <div className="mb-1 flex items-center gap-2">
-        <span
-          className="grid h-5 w-5 flex-none place-items-center rounded-full text-[0.62rem] font-bold"
-          style={{ background: "var(--cc)", color: "var(--bg)" }}
-        >
-          {s.f.k}
-        </span>
+        <LetterBadge k={s.f.k} size={20} />
         <span className="text-[0.78rem] font-semibold">{s.f.name}</span>
         <span className="mono ml-auto text-[0.6rem]" style={{ color: "var(--ink-faint)" }}>
           {faixaLabel(s.z)}
@@ -127,13 +55,13 @@ export function ResultFader({ s, onClick }: { s: FactorScore; onClick?: () => vo
 }
 
 /* ---------- barra agregada (dashboard) ---------- */
-export function AggBar({ label, ic, cssVar, mean, spread }: { label: string; ic: (typeof FACTORS)[number]["ic"]; cssVar: string; mean: number; spread: number }) {
+export function AggBar({ k, name, cssVar, mean, spread }: { k: string; name: string; cssVar: string; mean: number; spread: number }) {
   const P = posPct(mean);
   return (
     <div className="py-2" style={{ ["--cc" as string]: `var(${cssVar})` }}>
       <div className="mb-1 flex items-center gap-2 text-[0.82rem]">
-        <ApplianceIcon ic={ic} className="!w-4 !h-4" style={{ color: "var(--cc)" }} />
-        <span className="font-semibold">{label}</span>
+        <LetterBadge k={k} size={18} />
+        <span className="font-semibold">{name}</span>
         <span className="mono ml-auto text-[0.66rem]" style={{ color: "var(--ink-faint)" }}>
           média {mean.toFixed(2)} · dispersão {spread.toFixed(2)}
         </span>

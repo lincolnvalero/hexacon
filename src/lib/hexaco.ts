@@ -14,11 +14,8 @@ export type Pole = "alto" | "baixo" | "meio";
 
 export interface Factor {
   k: FactorKey;
-  ic: "ar" | "chuveiro" | "tv" | "ventilador" | "fogao" | "luz";
   cssVar: string;
   name: string;
-  appliance: string;
-  regula: string;
   lo: string;
   hi: string;
   anchor: number; // média normativa aproximada (1–5)
@@ -27,7 +24,6 @@ export interface Factor {
   falta: string; // sombra da ponta baixa
   comAlto: string;
   comBaixo: string;
-  short: { p: string; hi: string; lo: string };
 }
 
 export const SD = 0.6;
@@ -35,34 +31,27 @@ export const SD = 0.6;
 export const FACTORS: Factor[] = [
   {
     k: "H",
-    ic: "ar",
     cssVar: "--ac-h",
     name: "Honestidade-Humildade",
-    appliance: "Ar-condicionado",
-    regula: "o clima do ambiente — justo e respirável para todos, ou abafado",
-    lo: "cada um por si",
-    hi: "regra igual pra todos",
+    lo: "baixo",
+    hi: "alto",
     anchor: 3.2,
     forca: "Gera confiança, não joga sujo, pacifica, dá o exemplo.",
     excesso:
       "Coopera mesmo sem reciprocidade e pode ser explorado; recusa até a autopromoção legítima e some das decisões.",
     falta:
-      "Usa cargo e relação como moeda, se sente acima das regras, mexe no termostato só para si.",
+      "Usa cargo e relação como moeda, se sente acima das regras, abre exceção para si mesmo.",
     comAlto:
       "Seja igualmente direto e sem jogo. Reconheça a contribuição dele em público — ele não vai pedir.",
     comBaixo:
       "Não ataque o ego de frente. Prenda o limite a uma regra do sistema, impessoal e igual para todos — nunca a “eu decidi”.",
-    short: { p: "confiança e exemplo", hi: "tão “certo” que não se defende", lo: "puxa o cobertor pra si" },
   },
   {
     k: "E",
-    ic: "chuveiro",
     cssVar: "--ac-e",
     name: "Emocionalidade",
-    appliance: "Chuveiro",
-    regula: "a temperatura emocional — para a água não ficar nem gelada, nem fervendo",
-    lo: "água fria",
-    hi: "água fervendo",
+    lo: "baixo",
+    hi: "alto",
     anchor: 3.4,
     forca: "Percebe risco cedo, cria vínculo profundo, acolhe, chora junto de quem sofre.",
     excesso:
@@ -73,17 +62,13 @@ export const FACTORS: Factor[] = [
       "Dê o roteiro e a previsibilidade antes de cobrar ação. Valide o sentimento antes do conteúdo. Não dê bronca em público.",
     comBaixo:
       "Não espere reação emocional e não a cobre — não é indiferença. Vá direto; para um risco humano, mostre a consequência concreta.",
-    short: { p: "acolhe e percebe o risco", hi: "trava no medo, se esgota", lo: "parece indiferente" },
   },
   {
     k: "X",
-    ic: "tv",
     cssVar: "--ac-x",
     name: "eXtroversão",
-    appliance: "Som da TV",
-    regula: "o quanto você ocupa o volume do ambiente",
-    lo: "no mudo",
-    hi: "no talo",
+    lo: "baixo",
+    hi: "alto",
     anchor: 3.5,
     forca: "Dá energia ao grupo, mobiliza, assume a frente, fala em público sem medo.",
     excesso:
@@ -94,17 +79,13 @@ export const FACTORS: Factor[] = [
       "Dê espaço para a energia no começo, depois feche o tempo (“2 minutos cada”) para os outros entrarem.",
     comBaixo:
       "Pergunte diretamente e dê tempo para responder — silêncio não é concordância. Ofereça o canal escrito.",
-    short: { p: "energiza e mobiliza", hi: "não deixa ninguém falar", lo: "some quando devia aparecer" },
   },
   {
     k: "A",
-    ic: "ventilador",
     cssVar: "--ac-a",
     name: "Amabilidade",
-    appliance: "Ventilador",
-    regula: "o clima entre as pessoas — uma brisa que acalma ou um vento que derruba tudo",
-    lo: "vendaval",
-    hi: "brisa",
+    lo: "baixo",
+    hi: "alto",
     anchor: 2.9,
     forca: "Perdoa, segura o clima, negocia, aguenta pressão sem revidar.",
     excesso:
@@ -115,38 +96,30 @@ export const FACTORS: Factor[] = [
       "Não confunda a boa vontade com “está tudo bem” — pergunte de novo, específico. Dê permissão explícita para discordar.",
     comBaixo:
       "Nunca debata no calor. Fato, dado, lógica — deixe o número ganhar a discussão. Volte ao ponto quando esfriar.",
-    short: { p: "segura o clima, negocia", hi: "vira capacho", lo: "pavio curto, fere" },
   },
   {
     k: "C",
-    ic: "fogao",
     cssVar: "--ac-c",
     name: "Conscienciosidade",
-    appliance: "Fogo do fogão",
-    regula: "o ritmo e o acabamento — ferver rápido ou cozinhar no ponto",
-    lo: "fogo apagado",
-    hi: "fervendo",
+    lo: "baixo",
+    hi: "alto",
     anchor: 3.4,
     forca: "Estrutura, cumpre prazo, entrega no padrão, previne erro.",
     excesso:
       "Trava a entrega buscando o impecável, burocratiza, não delega porque “ninguém faz certo”.",
     falta:
-      "Esquece a panela no fogo ou serve antes de cozinhar — decide no impulso, larga pela metade.",
+      "Decide no impulso, começa sem planejar, larga pela metade.",
     comAlto:
       "Combine antes o nível de acabamento aceitável (“isto é rascunho”). Prazo firme. Não mude a regra no meio.",
     comBaixo:
       "Quebre em entregas pequenas e frequentes (48 h), com checagem. Combine lembrete. Registre tudo.",
-    short: { p: "organiza e entrega no prazo", hi: "trava buscando o perfeito", lo: "larga pela metade" },
   },
   {
     k: "O",
-    ic: "luz",
     cssVar: "--ac-o",
     name: "Abertura à experiência",
-    appliance: "Brilho da luz",
-    regula: "o quanto você enxerga de novo — clarear ou manter a penumbra do conhecido",
-    lo: "penumbra",
-    hi: "luz total",
+    lo: "baixo",
+    hi: "alto",
     anchor: 3.4,
     forca: "Resolve problema novo, traz ideia, enxerga além do óbvio, valoriza beleza e sentido.",
     excesso:
@@ -157,7 +130,6 @@ export const FACTORS: Factor[] = [
       "Traga o “porquê” e o quadro grande antes do detalhe. Dê espaço para propor — e ajude a aterrissar numa versão executável.",
     comBaixo:
       "Apresente a mudança como evolução segura do que ele já confia. Mostre onde já deu certo. Vá por incremento.",
-    short: { p: "traz ideia, enxerga a saída", hi: "novidade por novidade", lo: "engessa no “sempre foi assim”" },
   },
 ];
 

@@ -132,7 +132,7 @@ export function Slides() {
           </div>
           <h3 className="mb-2 text-2xl sm:text-3xl">Abra o seu painel</h3>
           <p className="max-w-[62ch] text-lg sm:text-xl" style={{ color: "var(--ink-soft)" }}>
-            Aponte a câmera. Responda o teste e veja seus seis controles calibrados.
+            Aponte a câmera. Responda o teste e veja seus seis fatores calibrados.
           </p>
           <p className="mono mt-4 text-sm" style={{ color: "var(--ink-faint)" }}>
             {link || "Crie/abra um evento para gerar o link desta turma."}
@@ -151,7 +151,7 @@ function CTASlide({ link }: { link: string }) {
       </div>
       <h2 className="text-2xl font-extrabold sm:text-4xl">Abra o seu painel</h2>
       <p className="max-w-[52ch] text-lg" style={{ color: "#aab2c4" }}>
-        Aponte a câmera. Responda o teste e veja seus seis controles calibrados.
+        Aponte a câmera. Responda o teste e veja seus seis fatores calibrados.
       </p>
       {link ? (
         <div className="flex flex-col items-center gap-3">

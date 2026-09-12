@@ -181,19 +181,6 @@ textarea {
   }
 }
 
-/* ---- appliance icon ---- */
-.appl-ic {
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  vertical-align: -0.125em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 /* ---- print (PDF do resultado) ---- */
 @media print {
   @page {
