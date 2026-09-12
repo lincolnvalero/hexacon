@@ -125,12 +125,38 @@ function Flow({ ev }: { ev: EventRow }) {
       )}
       {stage === "result" && result && (
         <>
+          <FinishBanner sent={sent} />
           <ResultView result={result} />
-          <p className="no-print mt-6 text-center text-xs" style={{ color: sent ? "var(--good)" : "var(--ink-faint)" }}>
-            {sent ? "✓ Resultado registrado para a turma." : "registrando…"}
-          </p>
         </>
       )}
+    </div>
+  );
+}
+
+const FRASES_MOTIVACIONAIS = [
+  "Quem se conhece melhor, negocia melhor as próprias reações — esse é o começo de qualquer evolução.",
+  "Autoconhecimento não muda quem você é; muda o que você faz com isso a partir de agora.",
+  "O traço não é destino. Saber onde ele mora em você é o que abre espaço pra evoluir.",
+  "Toda mudança de comportamento começa com um retrato honesto — o seu está pronto.",
+];
+
+function FinishBanner({ sent }: { sent: boolean }) {
+  const frase = useMemo(() => FRASES_MOTIVACIONAIS[Math.floor(Math.random() * FRASES_MOTIVACIONAIS.length)], []);
+  return (
+    <div
+      className="no-print mb-6 rounded-2xl border p-5 text-center"
+      style={{ borderColor: "var(--good)", background: "color-mix(in srgb, var(--good) 10%, transparent)" }}
+    >
+      <span
+        className="mono inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide"
+        style={{ color: "var(--good)" }}
+      >
+        {sent ? "✓ finalizado" : "registrando…"}
+      </span>
+      <p className="mx-auto mt-2 max-w-[46ch] font-display text-lg font-bold leading-snug">{frase}</p>
+      <p className="mt-2 text-sm" style={{ color: "var(--ink-soft)" }}>
+        Seu painel completo está logo abaixo — baixe em PDF ou encaminhe quando quiser.
+      </p>
     </div>
   );
 }
@@ -183,14 +209,6 @@ function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) 
           </button>
         ))}
       </div>
-
-      <p className="mt-8 border-t pt-4 text-xs" style={{ borderColor: "var(--line-soft)", color: "var(--ink-faint)" }}>
-        Seus seis resultados {`(e, se preenchido, seu nome e ministério)`} ficam visíveis para o
-        palestrante no painel da turma. Responda pensando em como você é num dia comum. Itens de
-        redação própria, montados sobre a estrutura da metodologia HEXACO® (6 fatores × 4 facetas
-        + Altruísmo) — não são o inventário HEXACO-PI-R; as faixas usam médias normativas
-        aproximadas.
-      </p>
     </>
   );
 }
