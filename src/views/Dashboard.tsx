@@ -15,7 +15,17 @@ export function Dashboard() {
 
   async function load() {
     setLoading(true);
-    const { data } = await supabase.from("events").select("*").order("criado_em", { ascending: false });
+    if (!session) {
+      setLoading(false);
+      return;
+    }
+    // filtra pelo dono explicitamente — a policy de leitura também libera eventos
+    // abertos de OUTROS donos (para o participante), o que não deve aparecer aqui.
+    const { data } = await supabase
+      .from("events")
+      .select("*")
+      .eq("owner", session.user.id)
+      .order("criado_em", { ascending: false });
     const evs = (data ?? []) as EventRow[];
     setEvents(evs);
     if (evs.length) {
@@ -28,7 +38,8 @@ export function Dashboard() {
   }
   useEffect(() => {
     load();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user.id]);
 
   return (
     <Shell>
