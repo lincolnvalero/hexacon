@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import { FACTORS, faixaLabel, posPct, ALTRUISMO, type Resultado } from "../lib/hexaco";
-import { Phone } from "./Phone";
 import { ResultFader } from "./Faders";
-import { ApplianceIcon } from "./Icon";
 
 export function ResultView({ result, presenterName }: { result: Resultado; presenterName?: string }) {
   const [nome, setNome] = useState(presenterName ?? "");
@@ -27,20 +25,22 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
         </span>
       </div>
 
-      <div className="grid items-start gap-6 md:grid-cols-[320px_1fr]">
-        <div className="mx-auto md:mx-0 print:hidden">
-          <Phone title="Meu painel" sub={`v${result.versao}`}>
-            <div>
-              {result.fatores.map((s, i) => (
-                <ResultFader key={s.f.k} s={s} onClick={() => scrollTo(i)} />
-              ))}
-              {result.altruismo != null && <AltRow value={result.altruismo} />}
-            </div>
-          </Phone>
+      <div className="grid items-start gap-6 md:grid-cols-[300px_1fr]">
+        <div className="card mx-auto w-full max-w-[300px] p-4 print:hidden md:mx-0">
+          <div className="mb-2 flex items-baseline justify-between">
+            <b className="font-display text-[0.9rem]">Resumo HEXACO</b>
+            <span className="mono text-[0.6rem]" style={{ color: "var(--ink-faint)" }}>
+              v{result.versao}
+            </span>
+          </div>
+          {result.fatores.map((s, i) => (
+            <ResultFader key={s.f.k} s={s} onClick={() => scrollTo(i)} />
+          ))}
+          {result.altruismo != null && <AltRow value={result.altruismo} />}
         </div>
         <div>
           <div className="eyebrow">Resultado completo</div>
-          <h2 className="mt-1 text-2xl">Como seus seis controles estão calibrados</h2>
+          <h2 className="mt-1 text-2xl">Seus seis fatores HEXACO</h2>
           <p className="mt-2 text-sm" style={{ color: "var(--ink-soft)" }}>
             A marca fina no meio de cada trilho é o <b>ajuste comum</b> (a média das pessoas). Seu botão
             mostra onde você ficou. Quanto mais longe do meio, mais aquela força — e a sombra dela —
@@ -69,10 +69,15 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
           return (
             <div key={s.f.k} data-rc className="print-block card p-4" style={{ ["--cc" as string]: `var(${s.f.cssVar})` }}>
               <div className="mb-0.5 flex items-center gap-2.5">
-                <ApplianceIcon ic={s.f.ic} className="!h-6 !w-6" style={{ color: "var(--cc)" }} />
-                <span className="font-display text-[1.05rem] font-bold">{s.f.appliance}</span>
+                <span
+                  className="grid h-7 w-7 flex-none place-items-center rounded-full font-display text-sm font-bold"
+                  style={{ background: "var(--cc)", color: "var(--bg)" }}
+                >
+                  {s.f.k}
+                </span>
+                <span className="font-display text-[1.05rem] font-bold">{s.f.name}</span>
                 <span className="text-[0.76rem]" style={{ color: "var(--ink-faint)" }}>
-                  {s.f.k} · {s.f.name}
+                  ({s.f.appliance})
                 </span>
                 <span
                   className="mono ml-auto text-[0.68rem] font-semibold uppercase tracking-wide"
@@ -148,7 +153,7 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
           {FACTORS.map((f) => (
             <div key={f.k} className="border-t py-3" style={{ borderColor: "var(--line-soft)", ["--cc" as string]: `var(${f.cssVar})` }}>
               <h4 className="mb-1 text-[0.78rem] font-semibold uppercase tracking-wide" style={{ color: "var(--cc)" }}>
-                {f.appliance} — {f.name}
+                {f.k} — {f.name} <span style={{ color: "var(--ink-faint)", textTransform: "none" }}>({f.appliance})</span>
               </h4>
               <p className="my-1">
                 <b>Com quem está no talo:</b> {f.comAlto}

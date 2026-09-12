@@ -89,8 +89,13 @@ export function ResultFader({ s, onClick }: { s: FactorScore; onClick?: () => vo
       onClick={onClick}
     >
       <div className="mb-1 flex items-center gap-2">
-        <ApplianceIcon ic={s.f.ic} className="!w-4 !h-4" style={{ color: "var(--cc)" }} />
-        <span className="text-[0.78rem] font-semibold">{s.f.appliance}</span>
+        <span
+          className="grid h-5 w-5 flex-none place-items-center rounded-full text-[0.62rem] font-bold"
+          style={{ background: "var(--cc)", color: "var(--bg)" }}
+        >
+          {s.f.k}
+        </span>
+        <span className="text-[0.78rem] font-semibold">{s.f.name}</span>
         <span className="mono ml-auto text-[0.6rem]" style={{ color: "var(--ink-faint)" }}>
           {faixaLabel(s.z)}
         </span>
