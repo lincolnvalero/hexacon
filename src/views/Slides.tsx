@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { supabase, type EventRow } from "../lib/supabase";
 import { QR } from "../components/QR";
+import { eventLink } from "../lib/links";
 
 const DECK_IMAGE_COUNT = 14;
 // prefixado com BASE_URL: raiz em produção normal, "/hexacon/" no build do GitHub Pages
@@ -23,7 +24,7 @@ export function Slides() {
     q.then(({ data }) => setEv((data as EventRow) ?? null));
   }, [id]);
 
-  const link = ev ? `${window.location.origin}/e/${ev.slug}` : "";
+  const link = ev ? eventLink(ev.slug) : "";
   const n = DECK_IMAGE_COUNT + 1; // + slide final de chamada (QR ao vivo)
   const go = useCallback((d: number) => setI((x) => Math.min(n - 1, Math.max(0, x + d))), [n]);
 

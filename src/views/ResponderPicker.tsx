@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { supabase, type EventRow } from "../lib/supabase";
 import { Shell } from "../components/Shell";
 import { QR } from "../components/QR";
+import { eventLink } from "../lib/links";
 
 /** Área do palestrante: a "Página de resposta" — escolher um evento e
  *  pegar o link/QR que a turma usa. */
@@ -23,7 +24,7 @@ export function ResponderPicker() {
       });
   }, []);
 
-  const link = sel ? `${window.location.origin}/e/${sel.slug}` : "";
+  const link = sel ? eventLink(sel.slug) : "";
 
   return (
     <Shell>

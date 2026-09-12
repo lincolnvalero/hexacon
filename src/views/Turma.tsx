@@ -5,6 +5,7 @@ import { Shell } from "../components/Shell";
 import { FACTORS, SD, faixaLabel } from "../lib/hexaco";
 import { AggBar } from "../components/Faders";
 import { QR } from "../components/QR";
+import { eventLink } from "../lib/links";
 
 const KEYS = ["h", "e", "x", "a", "c", "o"] as const;
 
@@ -29,7 +30,7 @@ export function Turma() {
     load();
   }, [id]);
 
-  const link = ev ? `${window.location.origin}/e/${ev.slug}` : "";
+  const link = ev ? eventLink(ev.slug) : "";
 
   const ministerios = useMemo(() => {
     const s = new Set<string>();
