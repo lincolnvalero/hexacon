@@ -49,7 +49,7 @@ export function Login() {
     <div className="grid min-h-screen place-items-center p-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 flex items-center justify-between">
-          <span className="font-display text-lg font-extrabold tracking-tight">Hexacon</span>
+          <span className="font-display text-lg font-extrabold tracking-tight">Hexaco</span>
           <ThemeToggle />
         </div>
         <div className="card p-6">

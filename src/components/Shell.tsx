@@ -29,7 +29,7 @@ export function Shell({ children }: { children: ReactNode }) {
               />
             ))}
           </span>
-          <span className="font-display text-[1.05rem] font-extrabold tracking-tight">Hexacon</span>
+          <span className="font-display text-[1.05rem] font-extrabold tracking-tight">Hexaco</span>
           <span className="ml-auto md:hidden">
             <ThemeToggle />
           </span>

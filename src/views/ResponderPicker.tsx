@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase, type EventRow } from "../lib/supabase";
+import { useAuth } from "../lib/auth";
 import { Shell } from "../components/Shell";
 import { QR } from "../components/QR";
 import { eventLink } from "../lib/links";
@@ -8,21 +9,27 @@ import { eventLink } from "../lib/links";
 /** Área do palestrante: a "Página de resposta" — escolher um evento e
  *  pegar o link/QR que a turma usa. */
 export function ResponderPicker() {
+  const { session } = useAuth();
   const [events, setEvents] = useState<EventRow[]>([]);
   const [sel, setSel] = useState<EventRow | null>(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    if (!session) return;
+    // só as turmas do próprio usuário — a policy de leitura também libera
+    // eventos abertos de OUTROS donos (para o participante), o que não deve
+    // aparecer aqui.
     supabase
       .from("events")
       .select("*")
+      .eq("owner", session.user.id)
       .order("criado_em", { ascending: false })
       .then(({ data }) => {
         const evs = (data ?? []) as EventRow[];
         setEvents(evs);
         setSel(evs.find((e) => e.aberto) ?? evs[0] ?? null);
       });
-  }, []);
+  }, [session?.user.id]);
 
   const link = sel ? eventLink(sel.slug) : "";
 

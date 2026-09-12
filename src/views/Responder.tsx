@@ -111,7 +111,7 @@ function Flow({ ev }: { ev: EventRow }) {
     <div className="mx-auto max-w-3xl px-4 pb-24 pt-4 sm:px-6">
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <div className="eyebrow">{ev.igreja || "Hexacon"}{ev.cidade ? ` · ${ev.cidade}` : ""}</div>
+          <div className="eyebrow">{ev.igreja || "Hexaco"}{ev.cidade ? ` · ${ev.cidade}` : ""}</div>
           <div className="font-display text-sm font-bold" style={{ color: "var(--ink-soft)" }}>
             {ev.titulo}
           </div>

@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Sistema da palestra Hexacon — página de resposta, slides e dashboard de evento",
+  "description": "Sistema da palestra Hexaco — página de resposta, slides e dashboard de evento",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

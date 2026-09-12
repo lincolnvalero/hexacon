@@ -18,7 +18,7 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
 
   function shareText(): string {
     const linhas = [
-      `MEU PAINEL HEXACON${nome ? " — " + nome : ""}`,
+      `MEU PAINEL HEXACO${nome ? " — " + nome : ""}`,
       "",
       ...result.fatores.map(
         (s) => `${s.f.k} · ${s.f.name}: ${s.mean.toFixed(1)}/5 (${faixaLabel(s.z)})`,
@@ -34,7 +34,7 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
     const nav = navigator as Navigator & { share?: (d: { title?: string; text?: string }) => Promise<void> };
     if (nav.share) {
       try {
-        await nav.share({ title: "Meu painel Hexacon", text });
+        await nav.share({ title: "Meu painel Hexaco", text });
         return;
       } catch {
         /* usuário cancelou o share nativo — nada a fazer */
@@ -47,7 +47,7 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
   return (
     <div>
       <div className="hidden print:mb-4 print:block print:border-b-2 print:border-black print:pb-2">
-        <b className="font-display text-xl">Meu painel Hexacon</b>
+        <b className="font-display text-xl">Meu painel Hexaco</b>
         <span className="mono block text-sm" style={{ color: "#555" }}>
           {nome ? `${nome} · ` : ""}versão {result.versao} · {data}
         </span>
