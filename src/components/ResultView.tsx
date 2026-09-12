@@ -16,6 +16,34 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
     cardsRef.current?.querySelectorAll<HTMLElement>("[data-rc]")[i]?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
+  function shareText(): string {
+    const linhas = [
+      `MEU PAINEL HEXACON${nome ? " — " + nome : ""}`,
+      "",
+      ...result.fatores.map(
+        (s) => `${s.f.k} · ${s.f.name}: ${s.mean.toFixed(1)}/5 (${faixaLabel(s.z)})`,
+      ),
+    ];
+    if (result.altruismo != null) linhas.push(`Altruísmo: ${result.altruismo.toFixed(1)}/5`);
+    linhas.push("", "Autorretrato orientado sobre a estrutura do HEXACO — não é uma medida validada.");
+    return linhas.join("\n");
+  }
+
+  async function share() {
+    const text = shareText();
+    const nav = navigator as Navigator & { share?: (d: { title?: string; text?: string }) => Promise<void> };
+    if (nav.share) {
+      try {
+        await nav.share({ title: "Meu painel Hexacon", text });
+        return;
+      } catch {
+        /* usuário cancelou o share nativo — nada a fazer */
+        return;
+      }
+    }
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+  }
+
   return (
     <div>
       <div className="hidden print:mb-4 print:block print:border-b-2 print:border-black print:pb-2">
@@ -170,6 +198,15 @@ export function ResultView({ result, presenterName }: { result: Resultado; prese
         O quanto eu estou disposto a ajustar o <em>meu</em> traço — e não o do outro — pelo bem do
         grupo?
       </blockquote>
+
+      <div className="no-print mt-6 flex flex-wrap gap-2.5">
+        <button className="btn" onClick={toPDF}>
+          Baixar em PDF
+        </button>
+        <button className="btn btn-ghost" onClick={share}>
+          Encaminhar (WhatsApp e outros)
+        </button>
+      </div>
     </div>
   );
 }
