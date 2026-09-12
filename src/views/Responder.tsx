@@ -9,8 +9,6 @@ import {
   type Item,
   type Resultado,
 } from "../lib/hexaco";
-import { Phone } from "../components/Phone";
-import { MethodItems } from "../components/Faders";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { ResultView } from "../components/ResultView";
 import { Scale } from "../components/Scale";
@@ -141,24 +139,17 @@ function Flow({ ev }: { ev: EventRow }) {
 function Intro({ ev, onStart }: { ev: EventRow; onStart: (v: Versao) => void }) {
   return (
     <>
-      <div className="grid items-start gap-8 md:grid-cols-[220px_1fr]">
-        <div className="mx-auto md:mx-0">
-          <Phone title="Os 6 controles" maxWidth={220}>
-            <MethodItems />
-          </Phone>
+      <div>
+        <div className="mono mb-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
+          Comunicação &amp; relações
         </div>
-        <div>
-          <div className="mono mb-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em]" style={{ color: "var(--brand)" }}>
-            Comunicação &amp; relações
-          </div>
-          <h1 className="text-3xl font-extrabold sm:text-4xl">Seis controles, na palma da mão</h1>
-          <p className="mt-4 max-w-[52ch]" style={{ color: "var(--ink-soft)" }}>
-            Responda e receba, na hora, os seus seis controles calibrados — a força e a sombra de
-            cada ponta. Da rápida (<b style={{ color: "var(--ink)" }}>10 min</b>) à completa (
-            <b style={{ color: "var(--ink)" }}>30 min</b>), você escolhe a profundidade. Tudo roda
-            no seu aparelho.
-          </p>
-        </div>
+        <h1 className="text-3xl font-extrabold sm:text-4xl">Seis controles, na palma da mão</h1>
+        <p className="mt-4 max-w-[52ch]" style={{ color: "var(--ink-soft)" }}>
+          Responda e receba, na hora, os seus seis controles calibrados — a força e a sombra de
+          cada ponta. Da rápida (<b style={{ color: "var(--ink)" }}>10 min</b>) à completa (
+          <b style={{ color: "var(--ink)" }}>30 min</b>), você escolhe a profundidade. Tudo roda
+          no seu aparelho.
+        </p>
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
